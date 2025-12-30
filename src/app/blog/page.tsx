@@ -11,11 +11,10 @@ export const metadata: Metadata = {
   description: "Operator-first writing on signals, governance, and RevOps workflows.",
 };
 
-export default function BlogIndexPage({
-  searchParams,
-}: {
-  searchParams?: { tag?: string };
+export default async function BlogIndexPage(props: {
+  searchParams?: Promise<{ tag?: string }>;
 }) {
+  const searchParams = await props.searchParams;
   const all = listContent("blog");
   const activeTag = searchParams?.tag;
   const tags = Array.from(new Set(all.flatMap((p) => p.tags))).sort();

@@ -10,11 +10,10 @@ export async function generateStaticParams() {
   return listContent("blog").map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   try {
     const item = await getContentBySlug("blog", params.slug);
     return {
@@ -33,11 +32,10 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
+export default async function BlogPostPage(props: {
+  params: Promise<{ slug: string }>;
 }) {
+  const params = await props.params;
   let item;
   try {
     item = await getContentBySlug("blog", params.slug);

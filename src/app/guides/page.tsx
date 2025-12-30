@@ -10,11 +10,10 @@ export const metadata: Metadata = {
   description: "Step-by-step playbooks for signal governance and RevOps workflows.",
 };
 
-export default function GuidesIndexPage({
-  searchParams,
-}: {
-  searchParams?: { tag?: string };
+export default async function GuidesIndexPage(props: {
+  searchParams?: Promise<{ tag?: string }>;
 }) {
+  const searchParams = await props.searchParams;
   const all = listContent("guides");
   const activeTag = searchParams?.tag;
   const tags = Array.from(new Set(all.flatMap((p) => p.tags))).sort();

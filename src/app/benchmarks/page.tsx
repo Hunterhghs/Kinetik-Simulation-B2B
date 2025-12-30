@@ -10,11 +10,10 @@ export const metadata: Metadata = {
   description: "Templates and measurement frameworks for signal-driven workflows.",
 };
 
-export default function BenchmarksIndexPage({
-  searchParams,
-}: {
-  searchParams?: { tag?: string };
+export default async function BenchmarksIndexPage(props: {
+  searchParams?: Promise<{ tag?: string }>;
 }) {
+  const searchParams = await props.searchParams;
   const all = listContent("benchmarks");
   const activeTag = searchParams?.tag;
   const tags = Array.from(new Set(all.flatMap((p) => p.tags))).sort();
